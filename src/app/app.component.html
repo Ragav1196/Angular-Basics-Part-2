@@ -1,4 +1,13 @@
 <div style="text-align: center">
-  <h1>From AppComponent</h1>
+  <h1>{{ message }}</h1>
 </div>
-<app-test></app-test>
+
+<h2>INPUT</h2>
+<app-input [parentData]="name"></app-input>
+<!-- 1 ->(2) passing name property -->
+<hr />
+
+<h2>OUTPUT</h2>
+<app-output (childEvent)="message = $event"></app-output>
+<!-- childEvent handles the event emitted from the ouput component and "$event" gets the arguement 
+  sent through the event and we are storing it in a "message" variable  -->
