@@ -1,34 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  /* 
-  1 -> STYLE BINDING:
-    Style binding is used to apply inlint style to the html element
+  /*
+    1 -> EVENT BINDING 
+      Here the binding happens from template to the class(like when user click changes happens).  
   */
   selector: 'app-test',
   template: `<h2>Welcome {{ name }}</h2>
-    <h2 [style.color]="'orange'">STYLE BINDING</h2>
-    <!-- Binding orange color to the color property -->
+    <button (click)="onClick()">Greet</button>
+    <!-- Adding a onClick event -->
 
-    <h2 [style.color]="hasError ? 'red' : 'orange'">STYLE BINDING</h2>
-    <!-- Binding orange or red color to the color property conditionally -->
+    {{ greeting }}
+    <!-- changing content on user click -->
 
-    <h2 [style.color]="highLightColor">STYLE BINDING</h2>
-    <!-- Binding green color to the color property using class property -->
+    <button (click)="onClick2($event)">Greet</button>
+    <!-- Passing DOM event as parameter to the onClick method -->
 
-    <h2 [ngStyle]="titleStyles">STYLE BINDING</h2>
-    <!-- Binding multiple inline style using ngStyle directive -->`,
+    <button (click)="nothing = 'nothing'">Greet</button>
+    <!-- Defining the function definition in line itself -->
+    {{ nothing }}`,
   styles: [],
 })
 export class TestComponent implements OnInit {
   public name = 'RAGAV';
-  public hasError = true;
-  public highLightColor = 'green';
-  public titleStyles = {
-    color: 'blue',
-    fontStyle: 'italic',
-  };
+  public greeting = '';
+  public nothing = '';
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  onClick() {
+    console.log('Hello World');
+    this.greeting = 'Hello World';
+  }
+
+  onClick2(event: any) {
+    console.log(event);
+  }
 }
