@@ -1,4 +1,13 @@
 <div style="text-align: center">
-  <h1>From AppComponent</h1>
+  <h1>Routing and Navigation</h1>
 </div>
-<app-test></app-test>
+
+<nav>
+  <a routerLink="/departments" routerLinkActive="active">Deparetment</a>
+  <!-- routerLinkActive is used to define a style when user clicks the link -->
+
+  <a routerLink="/employees" routerLinkActive="active">Employees</a>
+</nav>
+
+<router-outlet></router-outlet>
+<!-- Router view gets displayed in this tag -->
