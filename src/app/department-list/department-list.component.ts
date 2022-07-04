@@ -25,9 +25,6 @@ export class DepartmentListComponent implements OnInit {
   ngOnInit(): void {}
 
   onSelect(department: any) {
-    this.router.navigate([
-      '/departments',
-      department.id /* used to add id */,
-    ]); /* To change the url and add the id to the url */
+    this.router.navigate(['/departments', department.id]);
   }
 }
