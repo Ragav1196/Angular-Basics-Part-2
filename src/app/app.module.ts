@@ -11,5 +11,4 @@ import { DepartmentDetailsComponent } from './department-details/department-deta
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-/* 1 ->(1) Problem with previous branch method of routing is explained and changed here */
+/* 1 ->(1) Adding a style to visited page */
