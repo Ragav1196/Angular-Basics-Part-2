@@ -42,10 +42,15 @@ export class DepartmentDetailsComponent implements OnInit {
 
   goToDepartments() {
     let selectedId = this.departmentId ? this.departmentId : null;
-    this.router.navigate(['/departments', { id: selectedId }]);
-    /* 1 ->(2) We are changing the url to "/departments;id=1". so that we can go to /departments page and 
-      also we have the id of which we have visited recently
-      
-      /department doesnt need an placeholder like ":id". it will eventually goes to the /department page */
+    // this.router.navigate(['/departments', { id: selectedId }]);
+    this.router.navigate(
+      [
+        '../' /* this is to remove one "/" in the url. from /directive/1 to /directive */,
+        { id: selectedId },
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 }

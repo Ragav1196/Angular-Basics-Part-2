@@ -11,4 +11,4 @@ import { DepartmentDetailsComponent } from './department-details/department-deta
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-/* 1 ->(1) Adding a style to visited page */
+/* 1 ->(1) Using  Relative navigation  */

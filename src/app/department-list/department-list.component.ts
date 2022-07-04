@@ -35,7 +35,12 @@ export class DepartmentListComponent implements OnInit {
   }
 
   onSelect(department: any) {
-    this.router.navigate(['/departments', department.id]);
+    // this.router.navigate(['/departments', department.id]);
+    /* 1 ->(2) this above code is not flexible. if we change the route path in the future to 
+      /department-link, then we need to change in all the place */
+    this.router.navigate([department.id], { relativeTo: this.route });
+    /* Now irrespective of the route changes, this above code will work. because we are passing 
+      whatever the this.route path is assigned to */
   }
 
   isSelected(department: any) {
