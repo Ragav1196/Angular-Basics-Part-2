@@ -13,14 +13,5 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 
 /* 
-1 -> Two types of approach for forms 
-  1 - Template Driven forms - Heavy on component template
-  2 - Reactive forms - heavy on component class
-
-    Template Driven forms:
-    
-      1 -> Introduction
-        We use two way data binding with NgModule.
-        Readabilty of the form increases with complex forms
-        Suitable for simple forms
+1 -> Binding data from class to the HTML using two binding
 */
