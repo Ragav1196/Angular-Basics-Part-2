@@ -11,7 +11,3 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-/* 
-1 -> Binding data from class to the HTML using two binding
-*/

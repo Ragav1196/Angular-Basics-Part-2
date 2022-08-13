@@ -3,20 +3,28 @@
   <form #userForm="ngForm">
     <div class="form-group">
       <label>Name</label>
-      <!-- 5 -> "[ngModel]="userModel.name"" -> if we use this method then the data will flow from 
-        class to the template only but we need data to flow from class to template and vice 
-        versa so we are going to use two way binding -->
+      <!-- 1 -> '#name' -> adding reference for the input field -->
+      <!-- 3 -> #name='ngModel' -> adding ngModel reference for the input field to get hold of the 
+        ngModel properties like touched, valid etc -->
       <input
         type="text"
         class="form-control"
         name="userName"
+        #name="ngModel"
+        [class.is-invalid]="name.invalid && name.touched"
         [(ngModel)]="userModel.name"
+        required
       />
+      <small class="text-danger" [class.d-none]="name.valid || name.untouched"
+        >Name is required</small
+      >
     </div>
 
-    <!-- 4 -> this will display the value of the field which is given as input in the input field 
-      using the property defined in the class with the help of data binding -->
-    {{ userModel | json }}
+    <!-- 2 -> To get the classes applied on the tag -->
+    <!-- {{ name.className }} -->
+
+    <!-- 4 -> Using the property of the ngModel   -->
+    {{ name.touched }}
 
     <div class="form-group">
       <label>Email</label>
@@ -24,6 +32,7 @@
         type="email"
         class="form-control"
         name="userEmail"
+        #email="ngModel"
         [(ngModel)]="userModel.email"
       />
     </div>
@@ -34,15 +43,71 @@
         type="tel"
         class="form-control"
         name="userPhone"
+        pattern="^\d{10}$"
+        #phone="ngModel"
+        required
+        [class.is-invalid]="phone.invalid && phone.touched"
         [(ngModel)]="userModel.phone"
       />
+
+      <!-- {{ phone.errors["pattern"] }} -->
+
+      <!-- 5 -> To conditionally show multiple error messages according to the errors -->
+      <div *ngIf="phone.errors && phone.invalid && phone.touched">
+        <p>asdasd</p>
+        <small class="text-danger" *ngIf="phone.errors['pattern']"
+          >Phone number must be 10 digits</small
+        >
+
+        <small class="text-danger" *ngIf="phone.errors['required']"
+          >Phone number is required</small
+        >
+      </div>
     </div>
 
-    <div class="form-group">
-      <select class="custom-select" name="topic" [(ngModel)]="userModel.topic">
+    <!-- 6 -> Validation for select fields -->
+    <!-- 7 -> this one will work only when the value is a empty string for the select option 
+      'I am intereseted in'. What if we are populating the select option through an api. in that 
+      case we need to give a value for that particular select option. so in that case our required 
+      validation will fail -->
+    <!-- 
+      <div class="form-group">
+      <select
+        class="custom-select"
+        required
+        #topic="ngModel"
+        name="topic"
+        [class.is-invalid]="topic.invalid && topic.touched"
+        [(ngModel)]="userModel.topic"
+      >
         <option value="">I am interested in</option>
         <option *ngFor="let topic of topics">{{ topic }}</option>
       </select>
+      <small class="text-danger" [class.d-none]="topic.valid || topic.untouched"
+        >Please choose a topic</small
+      >
+    </div> 
+  -->
+
+    <!-- 9 -> Passing a value for the 'I am interested in' option -->
+    <div class="form-group">
+      <select
+        (blur)="validateTopic(topic.value)"
+        (change)="validateTopic(topic.value)"
+        class="custom-select"
+        #topic="ngModel"
+        name="topic"
+        [class.is-invalid]="topicHasError && topic.touched"
+        [(ngModel)]="userModel.topic"
+      >
+        <option value="default">I am interested in</option>
+        <option *ngFor="let topic of topics">{{ topic }}</option>
+      </select>
+      <small
+        class="text-danger"
+        [class.d-none]="!topicHasError || topic.untouched"
+        >Please choose a topic</small
+      >
     </div>
 
     <div class="mb-3">
