@@ -8,13 +8,10 @@ import { TestComponent } from './test/test.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent /* 4 -> Whenever a new component is created then that component has to be declared here */,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
