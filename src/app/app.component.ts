@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,35 +7,20 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  registrationForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    address: new FormGroup({
-      city: new FormControl(''),
-      state: new FormControl(''),
-      postalCode: new FormControl(),
+  constructor(private fb: FormBuilder) {}
+
+  get userName() {
+    return this.registrationForm.get('username');
+  }
+
+  registrationForm = this.fb.group({
+    username: ['', [Validators.required, Validators.minLength(5)]], 
+    password: [''],
+    confirmPassword: [''],
+    address: this.fb.group({
+      city: [''],
+      state: [''],
+      postalCode: [''],
     }),
   });
-
-  loadApiDataCompletly() {
-    this.registrationForm.setValue({
-      username: 'Ragav',
-      password: 'Ragav',
-      confirmPassword: 'Ragav',
-      address: {
-        city: 'Chennai',
-        state: 'Tamil Nadu',
-        postalCode: 635851,
-      },
-    });
-  }
-
-  loadApiDataPartially() {
-    this.registrationForm.patchValue({
-      username: 'Ragav',
-      password: 'Ragav',
-      confirmPassword: 'Ragav',
-    });
-  }
 }

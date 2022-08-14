@@ -4,7 +4,33 @@
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" formControlName="username" />
+      <input
+        type="text"
+        class="form-control"
+        formControlName="username"
+        [class.is-invalid]="
+          userName?.invalid &&
+          userName?.touched
+        "
+      />
+
+      <div
+        *ngIf="
+          userName?.invalid &&
+          userName?.touched
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="userName?.errors?.required"
+          >Username is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="userName?.errors?.minlength"
+          >Username has to be minimum 5 characters length
+        </small>
+      </div>
     </div>
 
     <div class="form-group">
@@ -33,20 +59,5 @@
     </div>
 
     <button class="btn btn-primary" type="submit">Register</button>
-    <button
-      (click)="loadApiDataCompletly()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Load Api Data Completely
-    </button>
-
-    <button
-      (click)="loadApiDataPartially()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Load Api Data Partially
-    </button>
   </form>
 </div>
