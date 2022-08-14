@@ -1,11 +1,10 @@
 <div class="container-fluid">
   <h1>Bootcamp Enrollment Form</h1>
-  <form #userForm="ngForm">
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
+    <!-- 2 -> it will only become true when the requirements of the all input fields is satisfied  -->
+    {{ userForm.valid }}
     <div class="form-group">
       <label>Name</label>
-      <!-- 1 -> '#name' -> adding reference for the input field -->
-      <!-- 3 -> #name='ngModel' -> adding ngModel reference for the input field to get hold of the 
-        ngModel properties like touched, valid etc -->
       <input
         type="text"
         class="form-control"
@@ -19,12 +18,6 @@
         >Name is required</small
       >
     </div>
-
-    <!-- 2 -> To get the classes applied on the tag -->
-    <!-- {{ name.className }} -->
-
-    <!-- 4 -> Using the property of the ngModel   -->
-    {{ name.touched }}
 
     <div class="form-group">
       <label>Email</label>
@@ -50,9 +43,6 @@
         [(ngModel)]="userModel.phone"
       />
 
-      <!-- {{ phone.errors["pattern"] }} -->
-
-      <!-- 5 -> To conditionally show multiple error messages according to the errors -->
       <div *ngIf="phone.errors && phone.invalid && phone.touched">
         <p>asdasd</p>
         <small class="text-danger" *ngIf="phone.errors['pattern']"
@@ -65,31 +55,6 @@
       </div>
     </div>
 
-    <!-- 6 -> Validation for select fields -->
-    <!-- 7 -> this one will work only when the value is a empty string for the select option 
-      'I am intereseted in'. What if we are populating the select option through an api. in that 
-      case we need to give a value for that particular select option. so in that case our required 
-      validation will fail -->
-    <!-- 
-      <div class="form-group">
-      <select
-        class="custom-select"
-        required
-        #topic="ngModel"
-        name="topic"
-        [class.is-invalid]="topic.invalid && topic.touched"
-        [(ngModel)]="userModel.topic"
-      >
-        <option value="">I am interested in</option>
-        <option *ngFor="let topic of topics">{{ topic }}</option>
-      </select>
-      <small class="text-danger" [class.d-none]="topic.valid || topic.untouched"
-        >Please choose a topic</small
-      >
-    </div> 
-  -->
-
-    <!-- 9 -> Passing a value for the 'I am interested in' option -->
     <div class="form-group">
       <select
         (blur)="validateTopic(topic.value)"
@@ -118,6 +83,7 @@
           class="form-check-input"
           name="timepreference"
           value="morning"
+          #timePreference="ngModel"
           [(ngModel)]="userModel.timePreference"
         />
         <label class="form-check-label">Morning (9AM - 12PM)</label>
@@ -129,7 +95,7 @@
           class="form-check-input"
           name="timepreference"
           value="evening"
-          [(ngModel)]="userModel.email"
+          [(ngModel)]="userModel.timePreference"
         />
         <label class="form-check-label">Evening (5PM - 8PM)</label>
       </div>
@@ -145,6 +111,12 @@
       <label class="form-check-label">Send me promotional offers</label>
     </div>
 
-    <button class="btn btn-primary" type="submit">Submit Form</button>
+    <button
+      [disabled]="userForm.form.invalid || topicHasError"
+      class="btn btn-primary"
+      type="submit"
+    >
+      Submit Form
+    </button>
   </form>
 </div>

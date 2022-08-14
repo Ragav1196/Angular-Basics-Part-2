@@ -11,3 +11,7 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+/* 
+  1 -> Entire form validation using ngForm directive
+*/
