@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { User } from './user';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,32 +7,35 @@ import { User } from './user';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  topics = ['Angular', 'React', 'Vue'];
-  topicHasError = true;
+  registrationForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+    confirmPassword: new FormControl(''),
+    address: new FormGroup({
+      city: new FormControl(''),
+      state: new FormControl(''),
+      postalCode: new FormControl(),
+    }),
+  });
 
-  userModel = new User(
-    'rob',
-    'rob@test.com',
-    5465463456,
-    'default',
-    'morning',
-    true
-  );
-
-  validateTopic(value: string) {
-    if (value === 'default') {
-      this.topicHasError = true;
-    } else {
-      this.topicHasError = false;
-    }
+  loadApiDataCompletly() {
+    this.registrationForm.setValue({
+      username: 'Ragav',
+      password: 'Ragav',
+      confirmPassword: 'Ragav',
+      address: {
+        city: 'Chennai',
+        state: 'Tamil Nadu',
+        postalCode: 635851,
+      },
+    });
   }
 
-  onSubmit(userForm: NgForm) {
-    // 3 ->
-    // to get access of all the methods of the form,
-    console.log(userForm);
-
-    // userModel value is console logged
-    console.log(this.userModel);
+  loadApiDataPartially() {
+    this.registrationForm.patchValue({
+      username: 'Ragav',
+      password: 'Ragav',
+      confirmPassword: 'Ragav',
+    });
   }
 }
