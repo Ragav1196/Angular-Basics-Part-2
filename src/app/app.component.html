@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <h2>Registration Form</h2>
-  {{ registrationForm.value | json }}
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label>Username</label>
@@ -63,12 +62,26 @@
 
     <div class="formGroup">
       <label>Email</label>
+      <button
+        class="btn btn-secondary btn-sm m-2"
+        (click)="addAlternateEmail()"
+        type="button"
+      >
+        Add Email
+      </button>
       <input type="text" formControlName="email" class="form-control" />
       <small
         class="text-danger"
         [class.d-none]="email?.valid || email?.untouched"
         >Email is required</small
       >
+
+      <div
+        formArrayName="alternateEmails"
+        *ngFor="let email of alternateEmails.controls; let i = index"
+      >
+        <input type="text" class="form-control my-1" [formControlName]="i" />
+      </div>
     </div>
 
     <div class="form-check mb-3">
