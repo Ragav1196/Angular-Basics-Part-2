@@ -61,6 +61,25 @@
       <input type="text" class="form-control" formControlName="postalCode" />
     </div>
 
+    <div class="formGroup">
+      <label>Email</label>
+      <input type="text" formControlName="email" class="form-control" />
+      <small
+        class="text-danger"
+        [class.d-none]="email?.valid || email?.untouched"
+        >Email is required</small
+      >
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        formControlName="subscribe"
+      />
+      <label class="form-check-label">Send me promotional offers</label>
+    </div>
+
     <button class="btn btn-primary" type="submit">Register</button>
   </form>
 </div>

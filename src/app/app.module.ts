@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 
-/* 
-  1 -> 
-    Cross field validation
+/*  
+conditional validation
 */

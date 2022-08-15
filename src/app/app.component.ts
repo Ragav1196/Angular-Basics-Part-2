@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from './shared/password.validator';
 import {
   customeForbiddenNameValidator,
@@ -11,36 +11,56 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
+
+  registrationForm!: FormGroup;
+
+  ngOnInit(): void {
+    this.registrationForm = this.fb.group(
+      {
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(5),
+            forbiddenNameValidator,
+            customeForbiddenNameValidator(/password/),
+          ],
+        ],
+        email: [''],
+        subscribe: [false],
+        password: [''],
+        confirmPassword: [''],
+        address: this.fb.group({
+          city: [''],
+          state: [''],
+          postalCode: [''],
+        }),
+      },
+      { validators: passwordValidator }
+    );
+
+    this.registrationForm
+      .get('subscribe')
+      ?.valueChanges.subscribe((checkedValue) => {
+        const email = this.registrationForm.get('email');
+        if (checkedValue) {
+          email?.setValidators(Validators.required);
+        } else {
+          email?.clearValidators();
+        }
+
+        email?.updateValueAndValidity();
+        // this is to ensure the correct validation status is updated or not
+      });
+  }
 
   get userName() {
     return this.registrationForm.get('username');
   }
 
-  registrationForm = this.fb.group(
-    {
-      username: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          forbiddenNameValidator,
-          customeForbiddenNameValidator(/password/),
-        ],
-      ],
-      password: [''],
-      confirmPassword: [''],
-      address: this.fb.group({
-        city: [''],
-        state: [''],
-        postalCode: [''],
-      }),
-    },
-    { validators: passwordValidator }
-    /* 
-    as we are going to keep h old of two values(password and confirm password) we are passing 
-      the validator function directly to the form instead of passing to the individual field
-    */
-  );
+  get email() {
+    return this.registrationForm.get('email');
+  }
 }
